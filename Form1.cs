@@ -60,6 +60,14 @@ namespace AdventOfCode2021
                 answer2.Text = dag.result2;
 
             }
+            if (comboBox1.SelectedIndex == 4)
+            {
+                Dag5 dag = new Dag5(@"C:\Users\flroelof\source\repos\AdventOfCode2021\AdventOfCode2021\Input\dag5.in");
+                answer1.Text = dag.result1;
+                answer2.Text = dag.result2;
+                //debuglabel.Text = dag.debug[0];
+                //debuglabel2.Text = dag.debug[1];
+            }
         }
     }
 }

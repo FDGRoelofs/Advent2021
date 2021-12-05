@@ -45,7 +45,8 @@ namespace AdventOfCode2021
             "Dag 1",
             "Dag 2",
             "Dag 3",
-            "Dag 4"});
+            "Dag 4",
+            "Dag 5"});
             this.comboBox1.Location = new System.Drawing.Point(79, 64);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 23);
