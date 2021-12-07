@@ -1,8 +1,7 @@
 main = putStrLn ("The answer is " ++ answer ++ " the second answer is " ++ answer2)
-answer = show (lowestdiff (allposdiff input))
+answer = show (listmin (allposdiff input))
 testinput = [16,1,2,0,4,2,7,1,2,14]
-testinput2 = [16,12]
-answer2 = show("test")
+answer2 = show(bestoption)
 
 absDiff :: Num a => a -> a -> a
 absDiff n = abs . (n-)
@@ -19,9 +18,9 @@ allposdiff x
     | x == []   = []
     | otherwise = map ((totaldiff) input) x
 
-lowestdiff [] = 1000000
-lowestdiff [x] = x
-lowestdiff (x:xs) = min (min x (head xs)) (lowestdiff xs)
+listmin [] = 1000000
+listmin [x] = x
+listmin (x:xs) = min (min x (head xs)) (listmin xs)
 
 fuelusage 0 = 0
 fuelusage 1 = 1
@@ -33,4 +32,4 @@ alloptions = map nodevalues [100..1000]
 
 optionvalue = map (sum) alloptions
 
-bestoption = lowestdiff optionvalue
+bestoption = listmin optionvalue
