@@ -49,6 +49,17 @@ namespace AdventOfCode2021
             Puzzel1();
             Puzzel2();
         }
+        public Dag(string input, bool runPuzzel)
+        {
+            this.path = input;
+            string rawinput = System.IO.File.ReadAllText(path, System.Text.Encoding.UTF8);
+            this.lines = rawinput.Split('\n');
+            if (runPuzzel)
+            {
+                Puzzel1();
+                Puzzel2();
+            }
+        }
 
         public abstract void Puzzel1();
         public abstract void Puzzel2();
