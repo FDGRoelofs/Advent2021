@@ -52,7 +52,7 @@ namespace AdventOfCode2021
             int length = inp.Length - 1;
             int[] brackets = new int[9]; // 0(,1[,2{,3<,4),5],6},7>,8score
             List<int> stillopen = new List<int>();
-            for (int i = 9; i < length; i++)
+            for (int i = 0; i < length; i++)
             {
                 int newchar = -1;
                 switch (inp[i])
