@@ -14,7 +14,7 @@ namespace AdventOfCode2021
         }
         int[] charscore = new int[] { 0, 0, 0, 0, 3, 57, 1197, 25137 };
         List<int[]> linefixers = new List<int[]>();
-        public string[] debug = new string[10];
+        public string[] debug = new string[100];
 
         public override void Puzzel1()
         {
@@ -43,15 +43,16 @@ namespace AdventOfCode2021
                 scores.Add(score);
             }
             scores.Sort();
-            long middlescore = scores[scores.Count / 2];
+            long middlescore = scores[(scores.Count - 1) / 2];
             this.result2 = middlescore.ToString();
         }
 
         public int[] lineScore(string inp)
         {
-            int length = inp.Length - 1;
+            int length = inp.Length;
             int[] brackets = new int[9]; // 0(,1[,2{,3<,4),5],6},7>,8score
             List<int> stillopen = new List<int>();
+            string debugger = "";
             for (int i = 0; i < length; i++)
             {
                 int newchar = -1;
@@ -90,7 +91,7 @@ namespace AdventOfCode2021
                         brackets[newchar]++;
                         break;
                 }
-                if (newchar < 4)
+                if (newchar < 4)// <{([{{}}[<[[[<>{}]]]>[]]
                     stillopen.Add(newchar);
                 else
                 {
@@ -103,6 +104,7 @@ namespace AdventOfCode2021
                         return brackets;
                     }
                 }
+                debugger += string.Join(";",stillopen);
             }
             int[] fixerstring = new int[stillopen.Count];
             for (int i = 0; i < fixerstring.Length; i++)
@@ -111,7 +113,7 @@ namespace AdventOfCode2021
                 fixerstring[i] = stillopen[nextposition] + 4;
             }
             linefixers.Add(fixerstring);
-            
+            this.debug[0] = debugger;
             return brackets;
         }
     }

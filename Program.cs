@@ -46,6 +46,8 @@ namespace AdventOfCode2021
             this.path = input;
             string rawinput = System.IO.File.ReadAllText(path, System.Text.Encoding.UTF8);
             this.lines = rawinput.Split('\n');
+            for(int i = 0; i < lines.Length; i ++)
+                lines[i] = lines[i].Trim('\r');
             Puzzel1();
             Puzzel2();
         }
@@ -54,6 +56,8 @@ namespace AdventOfCode2021
             this.path = input;
             string rawinput = System.IO.File.ReadAllText(path, System.Text.Encoding.UTF8);
             this.lines = rawinput.Split('\n');
+            for (int i = 0; i < lines.Length; i++)
+                lines[i] = lines[i].Trim('\r');
             if (runPuzzel)
             {
                 Puzzel1();
