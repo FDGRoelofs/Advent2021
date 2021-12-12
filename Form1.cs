@@ -102,10 +102,19 @@ namespace AdventOfCode2021
             }
             if (comboBox1.SelectedIndex == 9)
             {
-                Dag11 dag = new Dag11(@"C:\Users\flroelof\source\repos\AdventOfCode2021\AdventOfCode2021\Input\dag11.in", false);
+                Dag11 dag = new Dag11(@"C:\Users\flroelof\source\repos\AdventOfCode2021\AdventOfCode2021\Input\dag11t.in", false);
                 answer1.Text = dag.result1;
                 answer2.Text = dag.result2;
                 //debuglabel.Text = dag.debug[0];
+                //debuglabel2.Text = dag.debug[1];
+            }
+            if (comboBox1.SelectedIndex == 10)
+            {
+                Dag12 dag = new Dag12(@"C:\Users\flroelof\source\repos\AdventOfCode2021\AdventOfCode2021\Input\dag12.in");
+                answer1.Text = dag.result1;
+                answer2.Text = dag.result2;
+                richTextBox1.Text = dag.debug[3];
+                debuglabel.Text = dag.debug[0];
                 //debuglabel2.Text = dag.debug[1];
             }
         }

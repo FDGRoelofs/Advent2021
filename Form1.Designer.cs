@@ -36,6 +36,7 @@ namespace AdventOfCode2021
             this.answer2 = new System.Windows.Forms.Label();
             this.debuglabel = new System.Windows.Forms.Label();
             this.debuglabel2 = new System.Windows.Forms.Label();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -51,7 +52,8 @@ namespace AdventOfCode2021
             "Dag 8",
             "Dag 9",
             "Dag 10",
-            "Dag 11"});
+            "Dag 11",
+            "Dag 12"});
             this.comboBox1.Location = new System.Drawing.Point(79, 64);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 23);
@@ -115,11 +117,20 @@ namespace AdventOfCode2021
             this.debuglabel2.TabIndex = 6;
             this.debuglabel2.Text = "label2";
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(213, 64);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(249, 263);
+            this.richTextBox1.TabIndex = 7;
+            this.richTextBox1.Text = "";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.debuglabel2);
             this.Controls.Add(this.debuglabel);
             this.Controls.Add(this.answer2);
@@ -144,6 +155,7 @@ namespace AdventOfCode2021
         private System.Windows.Forms.Label answer2;
         private System.Windows.Forms.Label debuglabel;
         private System.Windows.Forms.Label debuglabel2;
+        private System.Windows.Forms.RichTextBox richTextBox1;
     }
 }
 
