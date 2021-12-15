@@ -2,9 +2,6 @@ import System.IO
 import Control.Monad
 import Data.Char
 import Data.List
-import System.Win32 (COORD(y, x))
-
-
 
 main = print (length output1)
 
