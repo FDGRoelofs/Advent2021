@@ -47,18 +47,26 @@ inserterToPair x = (findInserter2 x inserters,0)
 
 paircounter = map inserterToPair inserters
 
-initialcounter = initialisecounter startstring initialcounter
+initialcounter = initialisecounter startstring paircounter
 
 initialisecounter :: String -> [(String,Int)] -> [(String,Int)]
-initialisecounter (x:[y]) currentlist = incrementcounter [x,y] currentlist
-initialisecounter (x:y:xs) currentlist = initialisecounter xs (incrementcounter [x,y] currentlist)
+initialisecounter (x:[y]) currentlist = incrementcounter 1 [x,y] currentlist
+initialisecounter (x:y:xs) currentlist = initialisecounter (y:xs) (incrementcounter 1 [x,y] currentlist)
 initialisecounter [x] currentlist = currentlist
 initialisecounter [] currentlist = currentlist
 
-incrementcounter :: String -> [(String,Int)] -> [(String,Int)]
-incrementcounter pair list = map (findandincrement pair) list
+incrementcounter :: Int -> String -> [(String,Int)] -> [(String,Int)]
+incrementcounter x pair list = map (findandincrement x pair) list
 
-findandincrement :: String -> (String,Int) -> (String,Int)
-findandincrement search (find,x)
-    | search == find = (find, x+1)
+findandincrement :: Int -> String -> (String,Int) -> (String,Int)
+findandincrement val search (find,x)
+    | search == find = (find, x+val)
     | otherwise = (find,x)
+
+splitpolymer :: [(String,Int)] -> (String,Int) -> [(String,Int)]
+splitpolymer target (tosplit,val) = incrementcounter (-val) tosplit $ incrementcounter val left $ incrementcounter val left target
+    where left = [head tosplit] ++ findInserter tosplit inserters
+          right =  findInserter tosplit inserters ++ tail tosplit
+
+--insertPolymers2 :: [(String,Int)] -> [(String,Int)]
+--insertPolymers2 x:xs = 
