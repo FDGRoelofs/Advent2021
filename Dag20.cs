@@ -21,7 +21,7 @@ namespace AdventOfCode2021
         public override void Puzzel1()
         {
             string enhancementstring = lines[0];
-            dimension = lines.Length + (startmargin*2);
+            dimension = lines[3].Length + (startmargin*2);
             inputmap = new bool[dimension, dimension];
             outputmap = new bool[dimension, dimension];
             for (int i = 0; i < enhancementstring.Length; i++)
@@ -30,11 +30,11 @@ namespace AdventOfCode2021
                     enhancementkey[i] = true;
             }
             InitializeInputmap();
-            this.result2 = getSegmentValue(15, 15).ToString();
+            this.result2 = getSegmentValue(13, 13).ToString();
             Enhance();
             inputmap = outputmap;
             outputmap = new bool[dimension, dimension];
-            //voor debug redenen
+            /*voor debug redenen
             int answer = 0;
             for (int y = 0; y < dimension; y++)
                 for (int x = 0; x < dimension; x++)
@@ -61,7 +61,7 @@ namespace AdventOfCode2021
             for (int y = 2; y < lines.Length; y++)
                 for (int x = 0; x < lines[y].Length; x++)
                     if (lines[y][x] == '#')
-                        inputmap[x + startmargin,y + startmargin] = true;
+                        inputmap[x + startmargin,y + startmargin - 2] = true;
         }
 
         public bool getpixelatcoord(int x, int y)
