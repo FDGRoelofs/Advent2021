@@ -15,7 +15,7 @@ namespace AdventOfCode2021
         
         public Dag17(string s, bool b) : base(s,b)
         {
-            bool testdata = true;
+            bool testdata = false;
             if (testdata)
             {
                 targetXmin = 20;
@@ -32,33 +32,35 @@ namespace AdventOfCode2021
 
             }
             Puzzel1();
-            Puzzel2();
+            //Puzzel2();
         }
 
         public override void Puzzel1()
         {
-            //init target
-            
             //start puzzel 1
             int answer = 0;
-            string s = "poep";
+            List<(int,int)> hitlist = new List<(int, int)>();
             for(int velx = 0; velx < targetXmax; velx++)
-                for(int vely = targetYmin; vely < 45; vely++)
+                for(int vely = 10000; vely < 15000; vely++)
                 {
-                    if (velx == 9 && vely == 0)
-                        s = "test";
                     TrickShot Nextshot = new TrickShot((velx, vely), targetXmin, targetXmax, targetYmin, targetYmax);
                     int thisheight = Nextshot.Go();
                     if (thisheight > answer)
                         answer = thisheight;
+                    if (Nextshot.hit)
+                        hitlist.Add((velx,vely));
                 }
             this.result1 = answer.ToString();
-            this.result2 = s;
+            string answer2string = hitlist.Count.ToString();
+            //List<(int, int)> distincthits = new List<(int, int)>(hitlist.Distinct());
+            //string answer2string = distincthits.Count.ToString();
+            this.result2 = answer2string;
+            
         }
 
         public override void Puzzel2()
         {
-            //throw new NotImplementedException();
+            
         }
 
         
@@ -74,6 +76,7 @@ namespace AdventOfCode2021
         int targetXmax;
         int targetYmin;
         int targetYmax;
+        public bool hit;
         public TrickShot((int x, int y) initvel, int tXmin, int tXmax, int tYmin, int tYmax)
         {
             pos = (0, 0);
@@ -83,13 +86,13 @@ namespace AdventOfCode2021
             targetYmin = tYmin;
             targetYmax = tYmax;
             maxheight = -999;
+            hit = false;
         }
 
         public int Go()
         {
             
             bool live = true;
-            bool hit = false;
             while(live)
             {
                 live = Step();
@@ -139,9 +142,9 @@ namespace AdventOfCode2021
         {
             bool xbounds = false;
             bool ybounds = false;
-            if (pos.x > targetXmin && pos.x < targetXmax)
+            if (pos.x >= targetXmin && pos.x <= targetXmax)
                 xbounds = true;
-            if (pos.y > targetYmin && pos.y < targetYmax)
+            if (pos.y >= targetYmin && pos.y <= targetYmax)
                 ybounds = true;
             return xbounds & ybounds;
         }
