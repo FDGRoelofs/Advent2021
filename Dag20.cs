@@ -61,7 +61,7 @@ namespace AdventOfCode2021
             for (int y = 2; y < lines.Length; y++)
                 for (int x = 0; x < lines[y].Length; x++)
                     if (lines[y][x] == '#')
-                        inputmap[y + startmargin,x + startmargin - 2] = true;
+                        inputmap[y + startmargin,x + startmargin - 2] = true;// hoe moest deze ookalweer? min -2 aan de ene of andere kant geeft zelfde antwoord.
         }
 
         public bool getpixelatcoord(int y, int x)
