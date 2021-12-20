@@ -43,10 +43,10 @@ namespace AdventOfCode2021
             //this.result2 = answer.ToString();
             //tot hier*/
             Enhance();
-            answer = 0;
+            int answer = 0;
             for (int y = 0; y < dimension; y++)
                 for (int x = 0; x < dimension; x++)
-                    if (outputmap[x, y])
+                    if (outputmap[y, x])
                         answer++;
             this.result1 = answer.ToString();
         }
@@ -61,16 +61,16 @@ namespace AdventOfCode2021
             for (int y = 2; y < lines.Length; y++)
                 for (int x = 0; x < lines[y].Length; x++)
                     if (lines[y][x] == '#')
-                        inputmap[x + startmargin,y + startmargin - 2] = true;
+                        inputmap[y + startmargin,x + startmargin - 2] = true;
         }
 
-        public bool getpixelatcoord(int x, int y)
+        public bool getpixelatcoord(int y, int x)
         {
             if(y < 0 || y >= dimension)
                 return false;
             if(x < 0 || x >= dimension)
                 return false;
-            return inputmap[x,y];
+            return inputmap[y,x];
         }
 
         public void Enhance()
@@ -78,30 +78,30 @@ namespace AdventOfCode2021
             for(int x = 0; x < dimension; x++)
                 for(int y = 0; y < dimension; y++)
                 {
-                    outputmap[x,y] = enhancementkey[getSegmentValue(x,y)];
+                    outputmap[y,x] = enhancementkey[getSegmentValue(y,x)];
                 }
         }
 
         public int getSegmentValue(int x, int y)
         {
             int value = 0;
-            if (getpixelatcoord(x - 1, y - 1))
+            if (getpixelatcoord(y - 1, x - 1))
                 value += 0b_10000000;
-            if (getpixelatcoord(x, y - 1))
+            if (getpixelatcoord(y - 1, x))
                 value += 0b_01000000;
-            if (getpixelatcoord(x + 1, y - 1))
+            if (getpixelatcoord(y - 1, x + 1))
                 value += 0b_001000000;
-            if (getpixelatcoord(x - 1, y))
+            if (getpixelatcoord(y, x - 1))
                 value += 0b_000100000;
-            if (getpixelatcoord(x, y))
+            if (getpixelatcoord(y, x))
                 value += 0b_000010000;
-            if (getpixelatcoord(x + 1, y))
+            if (getpixelatcoord(y, x + 1))
                 value += 0b_000001000;
-            if (getpixelatcoord(x - 1, y + 1))
+            if (getpixelatcoord(y + 1, x - 1))
                 value += 0b_000000100;
-            if (getpixelatcoord(x, y + 1))
+            if (getpixelatcoord(y + 1, x))
                 value += 0b_000000010;
-            if (getpixelatcoord(x + 1, y + 1))
+            if (getpixelatcoord(y + 1 + 1, x + 1))
                 value += 0b_000000001;
             return value;
         }
