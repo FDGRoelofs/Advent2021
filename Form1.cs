@@ -158,6 +158,16 @@ namespace AdventOfCode2021
                 //debuglabel.Text = dag.debug[0];
                 //debuglabel2.Text = dag.debug[1];
             }
+            if (comboBox1.SelectedIndex == 14)
+            {
+                string path = AppDomain.CurrentDomain.BaseDirectory + @"\input\dag12test.in";
+                Dag17 dag = new Dag17(path, false);
+                answer1.Text = dag.result1;
+                answer2.Text = dag.result2;
+                //richTextBox1.Text = dag.debug[3];
+                //debuglabel.Text = dag.debug[0];
+                //debuglabel2.Text = dag.debug[1];
+            }
         }
     }
 }
