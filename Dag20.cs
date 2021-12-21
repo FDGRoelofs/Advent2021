@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +17,8 @@ namespace AdventOfCode2021
         public bool[,] outputmap;
         public int startmargin = 10;
         public int dimension;
+        public string[] debug = new string[10];
+        int iterationcount = 0;
 
         public override void Puzzel1()
         {
@@ -30,8 +32,9 @@ namespace AdventOfCode2021
                     enhancementkey[i] = true;
             }
             InitializeInputmap();
-            this.result2 = getSegmentValue(13, 13).ToString();
+            this.result2 = getSegmentValue(15, 15).ToString();
             Enhance();
+            
             inputmap = outputmap;
             outputmap = new bool[dimension, dimension];
             /*voor debug redenen
@@ -42,13 +45,28 @@ namespace AdventOfCode2021
                         answer++;
             //this.result2 = answer.ToString();
             //tot hier*/
+                           
             Enhance();
+            string outputstring = "";
+            for (int y = 0; y < dimension; y++)
+            {
+                for (int x = 0; x < dimension; x++)
+                {
+                    if (outputmap[y, x])
+                        outputstring += '#';
+                    else
+                        outputstring += '?';
+                }
+                outputstring += '\n';
+            }
+            debug[3] = outputstring;
             int answer = 0;
             for (int y = 0; y < dimension; y++)
                 for (int x = 0; x < dimension; x++)
                     if (outputmap[y, x])
                         answer++;
             this.result1 = answer.ToString();
+            iterationcount++;
         }
 
         public override void Puzzel2()
@@ -61,15 +79,18 @@ namespace AdventOfCode2021
             for (int y = 2; y < lines.Length; y++)
                 for (int x = 0; x < lines[y].Length; x++)
                     if (lines[y][x] == '#')
-                        inputmap[y + startmargin - 2,x + startmargin] = true;// hoe moest deze ookalweer? min -2 aan de ene of andere kant geeft zelfde antwoord.
+                        inputmap[y + startmargin - 2,x + startmargin] = true;
         }
 
         public bool getpixelatcoord(int y, int x)
         {
-            if(y < 0 || y >= dimension)
-                return false;
-            if(x < 0 || x >= dimension)
-                return false;
+            if (y < 0 || y >= dimension || x < 0 || x >= dimension)
+            {
+                if (iterationcount % 2 == 0)
+                    return false;
+                else
+                    return enhancementkey[0];
+            }
             return inputmap[y,x];
         }
 
@@ -86,9 +107,9 @@ namespace AdventOfCode2021
         {
             int value = 0;
             if (getpixelatcoord(y - 1, x - 1))
-                value += 0b_10000000;
+                value += 0b_100000000;
             if (getpixelatcoord(y - 1, x))
-                value += 0b_01000000;
+                value += 0b_010000000;
             if (getpixelatcoord(y - 1, x + 1))
                 value += 0b_001000000;
             if (getpixelatcoord(y, x - 1))
@@ -101,7 +122,7 @@ namespace AdventOfCode2021
                 value += 0b_000000100;
             if (getpixelatcoord(y + 1, x))
                 value += 0b_000000010;
-            if (getpixelatcoord(y + 1 + 1, x + 1))
+            if (getpixelatcoord(y + 1, x + 1))
                 value += 0b_000000001;
             return value;
         }
