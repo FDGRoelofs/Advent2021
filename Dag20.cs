@@ -61,7 +61,7 @@ namespace AdventOfCode2021
             for (int y = 2; y < lines.Length; y++)
                 for (int x = 0; x < lines[y].Length; x++)
                     if (lines[y][x] == '#')
-                        inputmap[y + startmargin,x + startmargin - 2] = true;// hoe moest deze ookalweer? min -2 aan de ene of andere kant geeft zelfde antwoord.
+                        inputmap[y + startmargin - 2,x + startmargin] = true;// hoe moest deze ookalweer? min -2 aan de ene of andere kant geeft zelfde antwoord.
         }
 
         public bool getpixelatcoord(int y, int x)
@@ -82,7 +82,7 @@ namespace AdventOfCode2021
                 }
         }
 
-        public int getSegmentValue(int x, int y)
+        public int getSegmentValue(int y, int x)
         {
             int value = 0;
             if (getpixelatcoord(y - 1, x - 1))
