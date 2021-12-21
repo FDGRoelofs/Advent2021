@@ -15,7 +15,7 @@ namespace AdventOfCode2021
         public bool[] enhancementkey = new bool[512];
         public bool[,] inputmap;
         public bool[,] outputmap;
-        public int startmargin = 10;
+        public int startmargin = 105;
         public int dimension;
         public string[] debug = new string[10];
         int iterationcount = 0;
@@ -32,20 +32,10 @@ namespace AdventOfCode2021
                     enhancementkey[i] = true;
             }
             InitializeInputmap();
-            this.result2 = getSegmentValue(15, 15).ToString();
+            //this.result2 = getSegmentValue(15, 15).ToString();
             Enhance();
-            
             inputmap = outputmap;
             outputmap = new bool[dimension, dimension];
-            /*voor debug redenen
-            int answer = 0;
-            for (int y = 0; y < dimension; y++)
-                for (int x = 0; x < dimension; x++)
-                    if (inputmap[x, y])
-                        answer++;
-            //this.result2 = answer.ToString();
-            //tot hier*/
-                           
             Enhance();
             string outputstring = "";
             for (int y = 0; y < dimension; y++)
@@ -66,12 +56,25 @@ namespace AdventOfCode2021
                     if (outputmap[y, x])
                         answer++;
             this.result1 = answer.ToString();
-            iterationcount++;
+
         }
 
         public override void Puzzel2()
         {
-            //throw new NotImplementedException();
+            inputmap = outputmap;
+            outputmap = new bool[dimension, dimension];
+            for (int i = 2; i < 50; i++)
+            {
+                Enhance();
+                inputmap = outputmap;
+                outputmap = new bool[dimension, dimension];
+            }
+            int answer = 0;
+            for (int y = 0; y < dimension; y++)
+                for (int x = 0; x < dimension; x++)
+                    if (inputmap[y, x])
+                        answer++;
+            this.result2 = answer.ToString();
         }
 
         public void InitializeInputmap()
@@ -101,6 +104,7 @@ namespace AdventOfCode2021
                 {
                     outputmap[y,x] = enhancementkey[getSegmentValue(y,x)];
                 }
+            iterationcount++;
         }
 
         public int getSegmentValue(int y, int x)
