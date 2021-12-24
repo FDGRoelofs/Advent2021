@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace AdventOfCode2021
 {
@@ -21,7 +22,7 @@ namespace AdventOfCode2021
         public override void Puzzel1()
         {
             bool testdata = false;
-            if(testdata)
+            if (testdata)
             {
                 p1pos = 4;
                 p2pos = 8;
@@ -32,7 +33,7 @@ namespace AdventOfCode2021
                 p2pos = 1;
             }
             bool player = true;
-            while(doTurn(player))
+            while (doTurn(player))
             {
                 player = !player;
             }
@@ -49,7 +50,7 @@ namespace AdventOfCode2021
         {
             g1dielastroll++;
             int currentroll = g1dielastroll % 100;
-            if(currentroll == 0)
+            if (currentroll == 0)
                 currentroll = 100;
             return currentroll;
         }
@@ -80,25 +81,42 @@ namespace AdventOfCode2021
             return true;
         }
 
-        List<diracGameState> nextstates;
-        Dictionary<int, int> stepgrowth
+        List<diracGameState> nextstates = new List<diracGameState>();
+        Dictionary<int, int> stepgrowth;
+        List<diracGameState> currentstates = new List<diracGameState>();
+        List<diracGameState> completestates = new List<diracGameState>();
         public override void Puzzel2()
         {
-            //throw new NotImplementedException();
-            long[] p1scores = new long[30];
-            long[] p2scores = new long[30];
-            List<diracGameState> currentstates = new List<diracGameState>();
-            diracGameState initial = new diracGameState(0, 0, 8, 1, 0);
+            diracGameState initial = new diracGameState(0, 0, 4, 8, 1);
             currentstates.Add(initial);
-            nextstates = new List<diracGameState>();
             stepgrowth = populateGrowthDict();
-            foreach(diracGameState state in currentstates)
+            bool player1turn = true;
+            while(currentstates.Count > 0)
             {
-                //pak een staat. bereken de 7 volgende staten die kunnen ontstaan. voeg ze in de juiste aantallen toe aan de lijst nextstates, als er al identieke staten in staan tel het aantal er bij op
-                //als een staat 21 punten bereikt, voeg de teller aan een relevante winnaar teller toe en gooi ze weg
+                foreach (diracGameState state in currentstates)
+                {
+                    diracTurn(player1turn, state);
+                }
+                currentstates = nextstates;
+                nextstates = new List<diracGameState>();
+                player1turn = !player1turn;
+                checkwinners();
             }
-
-
+            BigInteger p1winners = new BigInteger(0);
+            BigInteger p2winners = new BigInteger(0);
+            foreach (diracGameState state in completestates)
+            {
+                if(state.p1score > 20)
+                    p1winners += state.universecount;
+                if (state.p2score > 20)
+                    p2winners += state.universecount;
+                /*if (state.p1score > 20 && state.p2score > 20)
+                    this.result1 = "error"; //deze check heeft een bug gefixed, maar is nu niet meer nodig */
+            }
+            if (p1winners > p2winners)
+                this.result2 = p1winners.ToString();
+            if(p2winners > p1winners)
+                this.result2 = p2winners.ToString();
         }
 
         public Dictionary<int, int> populateGrowthDict()
@@ -124,26 +142,69 @@ namespace AdventOfCode2021
         }
 
         public void diracTurn(bool player, diracGameState state)
-        {
+        { 
             int currentpos;
             int newpoints = 0;
             if (player)
                 currentpos = state.p1pos;
             else
                 currentpos = state.p2pos;
-            for(int i = 3; i < 10; i++)
+            for (int i = 3; i < 10; i++) //maak een diracgamestate aan met nieuwe positie en score, check of ie al in nextstates zit, voeg m toe of tel count er bij op (state.count * stepgrowth[i])
             {
-                currentpos += i;
-                currentpos = currentpos % 10;
-                if (currentpos == 0)
-                    currentpos = 10;
-                newpoints = currentpos;
+                int nextpos = currentpos + i;
+                nextpos = nextpos % 10;
+                if (nextpos == 0)
+                    nextpos = 10;
+                newpoints = nextpos;
                 if (player)
+                {
+                    bool found = false;
                     newpoints += state.p1score;
+                    foreach (diracGameState elem in nextstates)
+                    {
+                        if (elem.p1pos == nextpos && elem.p2pos == state.p2pos && elem.p1score == newpoints && elem.p2score == state.p2score)
+                        {
+                            elem.universecount *= stepgrowth[i];
+                            found = true;
+                        }
+                        if (found)
+                            break;
+                    }
+                    if (!found)
+                        nextstates.Add(new diracGameState(newpoints, state.p2score, nextpos, state.p2pos, state.universecount * stepgrowth[i]));
+
+                }
                 else
+                {
+                    bool found = false;
                     newpoints += state.p2score;
-                //maak een diracgamestate aan met nieuwe positie en score, check of ie al in nextstates zit, voeg m toe of tel count er bij op (state.count * stepgrowth[i])
+                    foreach (diracGameState elem in nextstates)
+                    {
+                        if (elem.p1pos == state.p1pos && elem.p2pos == nextpos && elem.p1score == state.p1score && elem.p2score == newpoints)
+                        {
+                            elem.universecount *= stepgrowth[i];
+                            found = true;
+                        }
+                        if (found)
+                            break;
+                    }
+                    if (!found)
+                        nextstates.Add(new diracGameState(state.p1score, newpoints, state.p1pos, nextpos, state.universecount * stepgrowth[i]));
+                }
             }
+        }
+
+        public void checkwinners()
+        {
+            foreach (diracGameState state in currentstates)
+            {
+                if (state.p1score >= 21 || state.p2score >= 21)
+                    completestates.Add(state);
+                else
+                    nextstates.Add(state);
+            }
+            currentstates = nextstates;
+            nextstates = new List<diracGameState>();
         }
     }
 
