@@ -170,11 +170,31 @@ namespace AdventOfCode2021
             }
             if (comboBox1.SelectedIndex == 15)
             {
-                string path = AppDomain.CurrentDomain.BaseDirectory + @"\input\dag20test.in";
+                string path = AppDomain.CurrentDomain.BaseDirectory + @"\input\dag20.in";
                 Dag20 dag = new Dag20(path);
                 answer1.Text = dag.result1;
                 answer2.Text = dag.result2;
+                richTextBox1.Text = dag.debug[3];
+                //debuglabel.Text = dag.debug[0];
+                //debuglabel2.Text = dag.debug[1];
+            }
+            if (comboBox1.SelectedIndex == 16)
+            {
+                string path = AppDomain.CurrentDomain.BaseDirectory + @"\input\dag12test.in";
+                Dag21 dag = new Dag21(path);
+                answer1.Text = dag.result1;
+                answer2.Text = dag.result2;
                 //richTextBox1.Text = dag.debug[3];
+                //debuglabel.Text = dag.debug[0];
+                //debuglabel2.Text = dag.debug[1];
+            }
+            if (comboBox1.SelectedIndex == 17)
+            {
+                string path = AppDomain.CurrentDomain.BaseDirectory + @"\input\dag25.in";
+                Dag25 dag = new Dag25(path);
+                answer1.Text = dag.result1;
+                answer2.Text = dag.result2;
+                richTextBox1.Text = dag.result2;
                 //debuglabel.Text = dag.debug[0];
                 //debuglabel2.Text = dag.debug[1];
             }

@@ -182,7 +182,7 @@ namespace AdventOfCode2021
                     {
                         if (elem.p1pos == state.p1pos && elem.p2pos == nextpos && elem.p1score == state.p1score && elem.p2score == newpoints)
                         {
-                            elem.universecount *= stepgrowth[i];
+                            elem.universecount += stepgrowth[i] * state.universecount;
                             found = true;
                         }
                         if (found)
